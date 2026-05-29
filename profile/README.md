@@ -1,6 +1,6 @@
 # Voicetastic
 
-Push-to-talk voice messaging — and full radio configuration — over the
+Push-to-talk voice messaging, and full radio configuration, over the
 [Meshtastic](https://meshtastic.org/) LoRa mesh. No internet, no cellular,
 no central server.
 
@@ -11,7 +11,7 @@ vendored codec crates we publish for the browser build, and forks of the
 upstream Meshtastic firmware and device UI used to ship Voicetastic-aware
 builds.
 
-> Voice messaging is still experimental — the wire protocol (v3) is stable and
+> Voice messaging is still experimental. The wire protocol (v3) is stable and
 > implemented end-to-end across Android, desktop, and the browser client, but
 > field-testing on real radios is ongoing. Text messaging and radio
 > configuration are the supported paths today.
@@ -22,7 +22,7 @@ builds.
 
 | Project | What it is | Language |
 |---|---|---|
-| [voicetastic/android](https://github.com/voicetastic/android) | Android app — PTT voice, text chat, live mesh roster, full radio config UI. | Kotlin / Compose |
+| [voicetastic/android](https://github.com/voicetastic/android) | Android app. PTT voice, text chat, live mesh roster, full radio config UI. | Kotlin / Compose |
 | [voicetastic/voicetastic-core](https://github.com/voicetastic/voicetastic-core) | Linux desktop companion. Workspace of `voicetastic-core` (transport + protocol + voice + codecs), `voicetastic-cli`, `voicetastic-gui` (egui), and `voicetastic-android-bridge` (UniFFI). | Rust |
 | [voicetastic/voicetastic-web](https://github.com/voicetastic/voicetastic-web) | Zero-install browser client. Radio plugs into the user's machine over **Web Serial**; `voicetastic-core` compiled to WASM runs the protocol in-page. | Rust → WASM |
 | [voicetastic/site](https://github.com/voicetastic/site) | Marketing site + in-browser ESP firmware flasher. Deployed on push to `main`. | Astro / TS |
@@ -65,17 +65,17 @@ Inside that pipe:
 
 | Layer | Detail |
 |---|---|
-| Transport | BLE service `6ba1b218-15a8-461f-9fa8-5dcae273eafd`, USB serial, or Web Serial — same protobuf framing on all of them. |
+| Transport | BLE service `6ba1b218-15a8-461f-9fa8-5dcae273eafd`, USB serial, or Web Serial; same protobuf framing on all of them. |
 | Text | `TEXT_MESSAGE_APP` (port 1). |
 | Voice | `PRIVATE_APP` (port 256), 16-byte v3 header. Codecs: AMR-NB (default on Android), Opus, PCM_S16LE, Codec2. The codec is advertised in the header so any client can decode any sender. |
 | Config writes | `ADMIN_APP` (port 6). |
-| Voice reliability | Reed-Solomon FEC + receiver-driven NACK + sender-side retransmit, implemented once in `voicetastic-core` and re-used by every client — Android through the UniFFI bridge, the browser through the WASM build. |
+| Voice reliability | Reed-Solomon FEC + receiver-driven NACK + sender-side retransmit, implemented once in `voicetastic-core` and re-used by every client: Android through the UniFFI bridge, the browser through the WASM build. |
 
 The normative wire format lives in the
 [voicetastic-core wiki](https://github.com/voicetastic/voicetastic-core/wiki/Voice-Protocol);
 the reference implementation is
 [`crates/voicetastic-core/src/voice/`](https://github.com/voicetastic/voicetastic-core/tree/main/crates/voicetastic-core/src/voice).
-The browser client is the same core compiled to `wasm32` — see
+The browser client is the same core compiled to `wasm32`. See
 [voicetastic-web's README](https://github.com/voicetastic/voicetastic-web)
 for the WASM driver.
 
@@ -88,16 +88,16 @@ Pick a path:
 * **Just want to try it on a radio?** Flash a Voicetastic firmware build from
   the [site's `/flash` page](https://github.com/voicetastic/site), then
   pick a client:
-  * [voicetastic-web](https://github.com/voicetastic/voicetastic-web) —
+  * [voicetastic-web](https://github.com/voicetastic/voicetastic-web):
     nothing to install; plug the radio into your machine and open the page in
     Chrome/Edge or Firefox 151+.
-  * [Android app](https://github.com/voicetastic/android) — pairs over BLE.
-  * [desktop client](https://github.com/voicetastic/voicetastic-core) —
+  * [Android app](https://github.com/voicetastic/android): pairs over BLE.
+  * [desktop client](https://github.com/voicetastic/voicetastic-core):
     CLI + egui GUI for Linux, over BLE or USB serial.
 * **Building from source?** Each repo has its own README with prerequisites
   and build instructions. The desktop repo pulls
   [meshtastic/protobufs](https://github.com/meshtastic/protobufs) as a
-  submodule — clone with `--recurse-submodules`. The web repo pulls
+  submodule; clone with `--recurse-submodules`. The web repo pulls
   `voicetastic-core` via a pinned git dependency (no sibling checkout needed
   as of the GitHub migration).
 * **Implementing the protocol elsewhere?** Start with the
@@ -110,7 +110,7 @@ Pick a path:
 
 ## Contributing
 
-Voicetastic is a hobby / research project — issues, ideas, and pull requests
+Voicetastic is a hobby / research project; issues, ideas, and pull requests
 are welcome on any of the repos above. If you're changing protocol-affecting
 code, please update the wiki in the same PR so the spec keeps tracking the
 implementation.
